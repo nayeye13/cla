@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+         <meta charset="UTF-8">
+         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <title>우리반 학생</title>
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+         <script>
+                  $(function(){
+                  $.ajax({
+  
+                   url: "./s01.json",
+                   dataType: "json",
+                   success:function(data){
+                           if(data.length>0){
+                                    const tb=$("<table/>");
+                                    
+                                    for(let i in data){
+                                             let $id=data[i].id;
+                                             let $name=data[i].name;
+                                             let $team=data[i].team;
+
+                                             let row =$("<tr/>").append(
+                                                      $("<td/>").text($id),
+                                                      $("<td/>").text($name),
+                                                      $("<td/>").text($team),
+                                             );
+                                             tb.append(row);
+                                    }
+                                    $(".wrap").append(tb);
+                           }
+                           }
+                  });
+                   });
+                  
+         </script>
+</head>
+<body>
+         <div class="wrap"></div>
+          <input id="myInput" type="text" placeholder="Search.." >
+
+          <script>
+                  $("#myInput").on("keyup",function(){
+                           let value=$(this).val();
+                           $(".wrap tr").filter(function(){
+                                    $(this).toggle($(this).text().toLowerCase().indexOf(value)>-1)
+                           });
+                  });
+          </script>
+</body>
+</html>
